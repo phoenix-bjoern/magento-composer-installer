@@ -84,7 +84,7 @@ may not work for symlink, when file/directory is content of a symlinked director
  
 ### How to prevent your custom .gitignore file to be overridden
 
-In case you want to keep your custom .gitignore file then you need to ignore it in magento-deploy-ignore section
+In case you want to keep your custom .gitignore file then you need to ignore it in the _magento-deploy-ignore_ section.
 
 ```json
 {
