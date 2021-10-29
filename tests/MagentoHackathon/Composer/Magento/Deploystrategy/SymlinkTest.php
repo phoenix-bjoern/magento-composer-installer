@@ -32,7 +32,7 @@ class SymlinkTest extends AbstractTest
         $this->strategy->create($src, $dest);
         $this->assertTrue(is_readable($this->destDir . DIRECTORY_SEPARATOR . $dest));
         unlink($this->destDir . DIRECTORY_SEPARATOR . $dest);
-        $this->strategy->clean($this->destDir . DIRECTORY_SEPARATOR . $dest);
+        $this->strategy->clean();
         $this->assertFalse(is_readable($this->destDir . DIRECTORY_SEPARATOR . $dest));
     }
 

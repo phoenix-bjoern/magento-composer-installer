@@ -15,21 +15,21 @@ abstract class DeploystrategyAbstract
      *
      * @var array
      */
-    protected $mappings = array();
+    protected $mappings = [];
 
     /**
      * The current mapping of the deployment iteration
      *
      * @var array
      */
-    protected $currentMapping = array();
+    protected $currentMapping = [];
 
     /**
      * The List of entries which files should not get deployed
      * 
      * @var array
      */
-    protected $ignoredMappings = array();
+    protected $ignoredMappings = [];
 
 
     /**
@@ -220,7 +220,7 @@ abstract class DeploystrategyAbstract
      */
     public function addMapping($key, $value)
     {
-        $this->mappings[] = array($key, $value);
+        $this->mappings[] = [$key, $value];
     }
 
     protected function removeTrailingSlash($path)
@@ -270,7 +270,10 @@ abstract class DeploystrategyAbstract
         */
 
         // Create target directory if it ends with a directory separator
-        if (! file_exists($destPath) && in_array(substr($destPath, -1), array('/', '\\')) && ! is_dir($sourcePath)) {
+        if (!file_exists($destPath)
+            && in_array(substr($destPath, -1), ['/', '\\'])
+            && !is_dir($sourcePath)
+        ) {
             mkdir($destPath, 0777, true);
             $destPath = $this->removeTrailingSlash($destPath);
         }

@@ -9,17 +9,17 @@ class FullStackTest extends FullStack\AbstractTest
 {
     
 
-    protected function setUp()
+    protected function setUp(): void
     {
         
     }
     
-    protected function tearDown()
+    protected function tearDown(): void
     {
         
     }
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         $packagesPath    = self::getProjectRoot() .'/tests/res/packages';
@@ -28,7 +28,7 @@ class FullStackTest extends FullStack\AbstractTest
         foreach($directory as $file){
             if (!$file->isDot() && $file->isDir()) {
                 $process = new Process(
-                    self::getComposerCommand().' archive --format=zip --dir="../../../../tests/FullStackTest/artifact" -vvv',
+                    [self::getComposerCommand().' archive --format=zip --dir="../../../../tests/FullStackTest/artifact" -vvv'],
                     $file->getPathname()
                 );
                 $process->run();
@@ -42,7 +42,7 @@ class FullStackTest extends FullStack\AbstractTest
         }
     }
     
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         parent::tearDownAfterClass();
     }
@@ -62,7 +62,7 @@ class FullStackTest extends FullStack\AbstractTest
     protected function installBaseMagento()
     {
         $process = new Process(
-            self::getComposerCommand().' install '.self::getComposerArgs().' --working-dir="./"',
+            [self::getComposerCommand().' install '.self::getComposerArgs().' --working-dir="./"'],
             self::getBasePath().'/magento'
         );
         $process->setTimeout(300);
@@ -73,53 +73,53 @@ class FullStackTest extends FullStack\AbstractTest
     
     protected function getMethodRunConfigs()
     {
-        $array = array(
-            'symlink' => array(
-                1 => array(
+        $array = [
+            'symlink' => [
+                1 => [
                     'module_composer_json' => "composer_1.json",
-                ),
-                2 => array(
+                ],
+                2 => [
                     'module_composer_json' => "composer_2.json",
-                ),
-                3 => array(
+                ],
+                3 => [
                     'module_composer_json' => "composer_1.json",
-                ),
-            ),
-            'copy' => array(
-                1 => array(
+                ],
+            ],
+            'copy' => [
+                1 => [
                     'module_composer_json' => "composer_1_copy.json",
-                ),
-                2 => array(
+                ],
+                2 => [
                     'module_composer_json' => "composer_2_copy.json",
-                ),
-                3 => array(
+                ],
+                3 => [
                     'module_composer_json' => "composer_1_copy.json",
-                ),
-            ),
-            'copy_force' => array(
-                1 => array(
+                ],
+            ],
+            'copy_force' => [
+                1 => [
                     'module_composer_json' => "composer_1_copy_force.json",
-                ),
-                2 => array(
+                ],
+                2 => [
                     'module_composer_json' => "composer_2_copy_force.json",
-                ),
-                3 => array(
+                ],
+                3 => [
                     'module_composer_json' => "composer_1_copy_force.json",
-                ),
-            ),
+                ],
+            ],
             
-        );
+        ];
         
         return $array;
     }
     
     public function methodProvider()
     {
-        return array(
-            array('symlink'),
-            array('copy'),
-            array('copy_force'),
-        );
+        return [
+            ['symlink'],
+            ['copy'],
+            ['copy_force'],
+        ];
     }
 
     /**
@@ -197,7 +197,7 @@ class FullStackTest extends FullStack\AbstractTest
         );
 
         $process = new Process(
-            self::getComposerCommand().' '.$command.' '.self::getComposerArgs().' --optimize-autoloader --working-dir="./"',
+            [self::getComposerCommand().' '.$command.' '.self::getComposerArgs().' --optimize-autoloader --working-dir="./"'],
             self::getBasePath().'/magento-modules'
         );
         $process->setTimeout(300);
@@ -208,19 +208,19 @@ class FullStackTest extends FullStack\AbstractTest
     
     protected function getFirstOnlyFileTestSet()
     {
-        return array(
+        return [
             'app/etc/modules/Aoe_Profiler.xml',
             'app/design/frontend/test/default/issue76/Foobar/issue76.phtml',
             'app/design/frontend/wildcard/wildcard.phtml',
             'composer_lib/autoload.php',
             'composer_lib/magento-hackathon/magento-composer-installer-test-library/composer.json',
 //            'app/design/frontend/test/default/updateFileRemove/design/test2.phtml',
-        );
+        ];
     }
 
     protected function getFirstNotExistTestSet()
     {
-        return array(
+        return [
             'app/design/frontend/test/default/issue76/Foobar/Foobar/issue76.phtml',
             'app/design/frontend/frontend/wildcard/wildcard.phtml',
             'app/app/code/test.php',
@@ -228,23 +228,23 @@ class FullStackTest extends FullStack\AbstractTest
             'shell/compiler.php',
 //            'app/design/frontend/test/default/updateFileRemove/design/test2.phtml',
 //            'app/design/frontend/test/default/updateFileRemove/test2.phtml',
-        );
+        ];
     }
 
     protected function getFirstExistTestSet()
     {
-        return array(
+        return [
 //            'app/design/frontend/test/default/updateFileRemove/design/test1.phtml',
 //            'app/design/frontend/test/default/updateFileRemove/design/test2.phtml',
               'shell/log.php',
-        );
+        ];
     }
 
     protected function getSecondExistTestSet()
     {
-        return array(
+        return [
 //            'app/design/frontend/test/default/updateFileRemove/design/test1.phtml',
-        );
+        ];
     }
 
 

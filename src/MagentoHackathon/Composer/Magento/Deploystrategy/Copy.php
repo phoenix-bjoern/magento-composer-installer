@@ -44,7 +44,7 @@ class Copy extends DeploystrategyAbstract
         // first iteration through, we need to update the mappings to correctly handle mismatch globs
         if ($mapSource == $this->removeTrailingSlash($source) && $mapDest == $this->removeTrailingSlash($dest)) {
             if (basename($sourcePath) !== basename($destPath)) {
-                $this->setCurrentMapping(array($mapSource, $mapDest . '/' . basename($source)));
+                $this->setCurrentMapping([$mapSource, $mapDest . '/' . basename($source)]);
                 $cleanDest = $cleanDest . '/' . basename($source);
             }
         }

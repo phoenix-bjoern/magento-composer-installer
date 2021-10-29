@@ -13,7 +13,7 @@ use Composer\Config;
  */
 class PathMappingTranslationTest extends InstallerTest
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->fs = new Filesystem;
 
@@ -31,21 +31,21 @@ class PathMappingTranslationTest extends InstallerTest
         $this->config = new Config();
         $this->composer->setConfig($this->config);
         $this->composer->setPackage($this->createPackageMock(
-            array(
-                'path-mapping-translations' => array(
+            [
+                'path-mapping-translations' => [
                     'js/'       =>  'public/js/',
                     'media/'    =>  'public/media/',
                     'skin/'     =>  'public/skin/',
-                )
-            )
+                ]
+            ]
         ));
 
-        $this->config->merge(array(
-            'config' => array(
+        $this->config->merge([
+            'config' => [
                 'vendor-dir' => $this->vendorDir,
                 'bin-dir' => $this->binDir,
-            ),
-        ));
+            ],
+        ]);
 
         $this->dm = $this->getMockBuilder('Composer\Downloader\DownloadManager')
                 ->disableOriginalConstructor()
@@ -66,7 +66,7 @@ class PathMappingTranslationTest extends InstallerTest
         $package = $this->createPathMappingTranslationMock();
         $mappings = $this->object->getParser($package)->getMappings();
 
-        $this->assertContains(array('src/app/etc/modules/Example_Name.xml', 'app/etc/modules/Example_Name.xml'), $mappings);
+        $this->assertContains(['src/app/etc/modules/Example_Name.xml', 'app/etc/modules/Example_Name.xml'], $mappings);
     }
 
     /**
@@ -77,7 +77,7 @@ class PathMappingTranslationTest extends InstallerTest
         $package = $this->createPathMappingTranslationMock();
         $mappings = $this->object->getParser($package)->getMappings();
 
-        $this->assertContains(array('src/app/code/community/Example/Name', 'app/code/community/Example/Name'), $mappings);
+        $this->assertContains(['src/app/code/community/Example/Name', 'app/code/community/Example/Name'], $mappings);
     }
 
     /**
@@ -88,7 +88,7 @@ class PathMappingTranslationTest extends InstallerTest
         $package = $this->createPathMappingTranslationMock();
         $mappings = $this->object->getParser($package)->getMappings();
 
-        $this->assertContains(array('src/js', 'public/js/examplename'), $mappings);
+        $this->assertContains(['src/js', 'public/js/examplename'], $mappings);
     }
 
     /**
@@ -99,7 +99,7 @@ class PathMappingTranslationTest extends InstallerTest
         $package = $this->createPathMappingTranslationMock();
         $mappings = $this->object->getParser($package)->getMappings();
 
-        $this->assertContains(array('src/skin', 'public/skin/frontend/default/default/examplename'), $mappings);
+        $this->assertContains(['src/skin', 'public/skin/frontend/default/default/examplename'], $mappings);
     }
 
     /**
@@ -110,7 +110,7 @@ class PathMappingTranslationTest extends InstallerTest
         $package = $this->createPathMappingTranslationMock();
         $mappings = $this->object->getParser($package)->getMappings();
 
-        $this->assertContains(array('src/media/images', 'public/media/examplename_images'), $mappings);
+        $this->assertContains(['src/media/images', 'public/media/examplename_images'], $mappings);
     }
 
     /**
@@ -121,7 +121,7 @@ class PathMappingTranslationTest extends InstallerTest
         $package = $this->createPathMappingTranslationMock();
         $mappings = $this->object->getParser($package)->getMappings();
 
-        $this->assertContains(array('src2/js', 'public/js/examplename'),$mappings);
+        $this->assertContains(['src2/js', 'public/js/examplename'],$mappings);
     }
 
     /**
@@ -132,7 +132,7 @@ class PathMappingTranslationTest extends InstallerTest
         $package = $this->createPathMappingTranslationMock();
         $mappings = $this->object->getParser($package)->getMappings();
 
-        $this->assertContains(array('src2/skin', 'public/skin/frontend/default/default/examplename'), $mappings);
+        $this->assertContains(['src2/skin', 'public/skin/frontend/default/default/examplename'], $mappings);
     }
 
     /**
@@ -143,6 +143,6 @@ class PathMappingTranslationTest extends InstallerTest
         $package = $this->createPathMappingTranslationMock();
         $mappings = $this->object->getParser($package)->getMappings();
 
-        $this->assertContains(array('src2/media/images', 'public/media/examplename_images'), $mappings);
+        $this->assertContains(['src2/media/images', 'public/media/examplename_images'], $mappings);
     }
 }

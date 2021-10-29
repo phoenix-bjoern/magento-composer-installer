@@ -17,7 +17,7 @@ class NoneTest extends \PHPUnit_Framework_TestCase
         return vfsStream::url(self::URL_VFS_ROOT . DS . $input);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         vfsStream::setup(self::URL_VFS_ROOT);
         $this->sourceDir = $this->_getVfsUrl('sourceDir');

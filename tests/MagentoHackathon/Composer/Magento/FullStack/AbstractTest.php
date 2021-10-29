@@ -16,10 +16,10 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
 
     protected static $processLogCounter = 1;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         $process = new Process(
-            'perl -pi -e \'s/"test_version"/"version"/g\' ./composer.json',
+            ['perl -pi -e \'s/"test_version"/"version"/g\' ./composer.json'],
             self::getProjectRoot()
         );
         $process->run();
@@ -38,7 +38,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         @unlink(self::getBasePath().'/magento-modules/vendor/theseer/directoryscanner/tests/_data/nested/empty');
         
         $process = new Process(
-            self::getComposerCommand().' archive --format=zip --dir="tests/FullStackTest/artifact" -vvv',
+            [self::getComposerCommand().' archive --format=zip --dir="tests/FullStackTest/artifact" -vvv'],
             self::getProjectRoot()
         );
         $process->run();
@@ -53,10 +53,10 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
 
     }
     
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         $process = new Process(
-            'perl -pi -e \'s/"version"/"test_version"/g\' ./composer.json',
+            ['perl -pi -e \'s/"version"/"test_version"/g\' ./composer.json'],
             self::getProjectRoot()
         );
         $process->run();
@@ -79,7 +79,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     protected static function getComposerCommand(){
         $command = 'composer.phar';
         if( getenv('TRAVIS') == "true" ){
-            $command = self::getProjectRoot().'/composer.phar';
+            $command = self::getProjectRoot() . '/composer.phar';
         }
         return $command;
     }
@@ -89,11 +89,14 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     }
 
     protected static function logProcessOutput(Process $process, $name = null){
-        if($name === null){
+        if($name === null) {
             $name = self::$processLogCounter;
             self::$processLogCounter++;
         }
-        file_put_contents( self::getBasePath().'/'.get_called_class().'_'.$name.'Output.log', $process->getCommandLine() ."\n\n". $process->getOutput() );
+        file_put_contents(
+            self::getBasePath() . '/' . self::class . '_' . $name . 'Output.log',
+            $process->getCommandLine() . "\n\n" . $process->getOutput()
+        );
     }
 
     public function assertProcess(Process $process)

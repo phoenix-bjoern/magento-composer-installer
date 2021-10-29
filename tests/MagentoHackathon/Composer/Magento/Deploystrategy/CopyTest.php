@@ -37,7 +37,7 @@ class CopyTest extends AbstractTest
         $this->mkdir($this->destDir . DS . $dest);
 
         $testTarget = $this->destDir . DS . $dest . DS . $sourceContents;
-        $this->strategy->setCurrentMapping(array($sourceRoot, $dest));
+        $this->strategy->setCurrentMapping([$sourceRoot, $dest]);
 
         $this->strategy->create($sourceRoot, $dest);
         $this->assertFileExists($testTarget);
@@ -62,7 +62,7 @@ class CopyTest extends AbstractTest
         $this->mkdir($this->destDir . DS . $dest);
 
         $testTarget = $this->destDir . DS . $sourceContents;
-        $this->strategy->setMappings(array(array('*', '/')));
+        $this->strategy->setMappings([['*', '/']]);
 
         $this->strategy->deploy();
         $this->assertFileExists($testTarget);

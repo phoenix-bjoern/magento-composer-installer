@@ -10,12 +10,12 @@ class GlobalPluginTest extends AbstractTest
     
     protected static $processLogCounter = 1;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         
     }
     
-    protected function tearDown()
+    protected function tearDown(): void
     {
         
     }
@@ -31,10 +31,10 @@ class GlobalPluginTest extends AbstractTest
     public function testGlobalInstall()
     {
         $process = new Process(
-            self::getComposerCommand().' global install',
+            [self::getComposerCommand().' global install'],
             self::getProjectRoot()
         );
-        $process->setEnv( array('COMPOSER_HOME'=>self::getBasePath().'/home'));
+        $process->setEnv( ['COMPOSER_HOME'=>self::getBasePath().'/home']);
 
         $process->run();
         $this->assertProcess($process);
@@ -44,10 +44,10 @@ class GlobalPluginTest extends AbstractTest
     {
 
         $process = new Process(
-            self::getComposerCommand().' global update',
+            [self::getComposerCommand().' global update'],
             self::getProjectRoot()
         );
-        $process->setEnv( array('COMPOSER_HOME'=>self::getBasePath().'/home'));
+        $process->setEnv(['COMPOSER_HOME'=>self::getBasePath().'/home']);
 
         $process->run();
         $this->assertProcess($process);
