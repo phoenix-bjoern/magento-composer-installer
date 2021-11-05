@@ -1,7 +1,7 @@
 <?php
 namespace MagentoHackathon\Composer\Magento;
 
-class ModmanParserTest extends \PHPUnit_Framework_TestCase
+class ModmanParserTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var ModmanParser

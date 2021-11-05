@@ -30,8 +30,8 @@ class PackageXmlParser extends PathTranslationParser
      *
      * @param string $moduleDir
      * @param string $packageXmlFile
-     * @param string $pathSuffix
      * @param array $translations
+     * @param string $pathSuffix
      */
     public function __construct($moduleDir, $packageXmlFile, $translations = [], $pathSuffix = '')
     {

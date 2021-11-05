@@ -3,7 +3,7 @@ namespace MagentoHackathon\Composer\Magento\Deploystrategy;
 
 if (! defined('DS')) define('DS', DIRECTORY_SEPARATOR);
 
-abstract class AbstractTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractTest extends \PHPUnit\Framework\TestCase
 {
     const TEST_FILETYPE_FILE = 'file';
     const TEST_FILETYPE_LINK = 'link';

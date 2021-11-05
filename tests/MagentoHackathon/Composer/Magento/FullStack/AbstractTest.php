@@ -11,7 +11,7 @@ namespace MagentoHackathon\Composer\Magento\FullStack;
 use Composer\Util\Filesystem;
 use Symfony\Component\Process\Process;
 
-abstract class AbstractTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractTest extends \PHPUnit\Framework\TestCase
 {
 
     protected static $processLogCounter = 1;

@@ -1,13 +1,12 @@
 <?php
 namespace MagentoHackathon\Composer\Magento;
 
-use Composer\Installer\LibraryInstaller;
 use Composer\Util\Filesystem;
 use Composer\Test\TestCase;
 use Composer\Composer;
 use Composer\Config;
 
-class InstallerTest extends \PHPUnit_Framework_TestCase
+class InstallerTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Installer
@@ -74,8 +73,9 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
     {
         //$package= $this->getMockBuilder('Composer\Package\RootPackageInterface')
         $package = $this->getMockBuilder('Composer\Package\RootPackage')
-                ->setConstructorArgs([md5(rand()), '1.0.0.0', '1.0.0'])
-                ->getMock();
+            ->setConstructorArgs([md5(rand()), '1.0.0.0', '1.0.0'])
+            ->getMock();
+
         $extraData = array_merge(['magento-root-dir' => $this->magentoDir], $extra);
 
         $package->expects($this->any())
@@ -135,25 +135,21 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
                 'method' => 'copy',
                 'expectedClass' => 'MagentoHackathon\Composer\Magento\Deploystrategy\Copy',
                 'packageName'   => 'example/test1',
-                'composerExtra' => [],
             ],
             [
                 'method' => 'symlink',
                 'expectedClass' => 'MagentoHackathon\Composer\Magento\Deploystrategy\Symlink',
                 'packageName'   => 'example/test1',
-                'composerExtra' => [],
             ],
             [
                 'method' => 'link',
                 'expectedClass' => 'MagentoHackathon\Composer\Magento\Deploystrategy\Link',
                 'packageName'   => 'example/test1',
-                'composerExtra' => [],
             ],
             [
                 'method' => 'none',
                 'expectedClass' => 'MagentoHackathon\Composer\Magento\Deploystrategy\None',
                 'packageName'   => 'example/test1',
-                'composerExtra' => [],
             ],
             [
                 'method' => 'symlink',
