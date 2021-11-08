@@ -45,7 +45,7 @@ class CopyTest extends AbstractTest
         $this->strategy->setIsForced(true);
         $this->strategy->create($sourceRoot, $dest);
 
-        $this->assertFileNotExists(dirname(dirname($testTarget)) . DS . basename($testTarget));
+        $this->assertFileDoesNotExist(dirname(dirname($testTarget)) . DS . basename($testTarget));
     }
 
     public function testWildcardCopyToExistingDir()
@@ -70,7 +70,7 @@ class CopyTest extends AbstractTest
         $this->strategy->setIsForced(true);
         $this->strategy->deploy();
 
-        $this->assertFileNotExists($this->destDir . DS . 'app' . DS . 'app' . DS . 'code' . DS . 'test.php');
+        $this->assertFileDoesNotExist($this->destDir . DS . 'app' . DS . 'app' . DS . 'code' . DS . 'test.php');
         
     }
 }

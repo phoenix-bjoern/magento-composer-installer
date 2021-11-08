@@ -154,7 +154,7 @@ class FullStackTest extends FullStack\AbstractTest
                             $this->assertFileExists( self::getBasePath().'/htdocs/'.$file );
                         }
                         foreach($this->getFirstNotExistTestSet() as $file){
-                            $this->assertFileNotExists( self::getBasePath().'/htdocs/'.$file );
+                            $this->assertFileDoesNotExist( self::getBasePath().'/htdocs/'.$file );
                         }
                         if($method==="copy_force"){
                             $this->assertStringEqualsFile(
@@ -170,7 +170,7 @@ class FullStackTest extends FullStack\AbstractTest
                     case 2:
                         if($method==="symlink"){
                             foreach($this->getFirstOnlyFileTestSet() as $file){
-                                $this->assertFileNotExists( self::getBasePath().'/htdocs/'.$file );
+                                $this->assertFileDoesNotExist( self::getBasePath().'/htdocs/'.$file );
                             }
                         }
                         foreach($this->getSecondExistTestSet() as $file){
