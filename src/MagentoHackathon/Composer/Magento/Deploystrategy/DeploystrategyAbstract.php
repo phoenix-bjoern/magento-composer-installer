@@ -244,8 +244,10 @@ abstract class DeploystrategyAbstract
             return;
         }
         
-        $sourcePath = $this->getSourceDir() . '/' . $this->removeTrailingSlash($source);
-        $destPath = $this->getDestDir() . '/' . $dest;
+        $sourcePath = $this->getSourceDir() . DIRECTORY_SEPARATOR
+            . ltrim($this->removeTrailingSlash($source), DIRECTORY_SEPARATOR);
+        $destPath = $this->getDestDir() . DIRECTORY_SEPARATOR
+            . ltrim($this->removeTrailingSlash($dest), DIRECTORY_SEPARATOR);
 
         /* List of possible cases, keep around for now, might come in handy again
 
@@ -274,7 +276,7 @@ abstract class DeploystrategyAbstract
             && in_array(substr($destPath, -1), ['/', '\\'])
             && !is_dir($sourcePath)
         ) {
-            mkdir($destPath, 0777, true);
+            mkdir($destPath, 0755, true);
             $destPath = $this->removeTrailingSlash($destPath);
         }
 
@@ -286,7 +288,7 @@ abstract class DeploystrategyAbstract
                 foreach ($matches as $match) {
                     $newDest = substr($destPath . '/' . basename($match), strlen($this->getDestDir()));
                     $newDest = ltrim($newDest, ' \\/');
-                    $this->create(substr($match, strlen($this->getSourceDir())+1), $newDest);
+                    $this->create(substr($match, strlen($this->getSourceDir())), $newDest);
                 }
                 return true;
             }

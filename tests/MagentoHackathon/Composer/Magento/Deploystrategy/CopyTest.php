@@ -19,11 +19,13 @@ class CopyTest extends AbstractTest
      */
     public function getTestDeployStrategyFiletype($isDir = false)
     {
-        if ($isDir) return self::TEST_FILETYPE_DIR;
+        if ($isDir) {
+            return self::TEST_FILETYPE_DIR;
+        }
 
         return self::TEST_FILETYPE_FILE;
     }
-    
+
     public function testCopyDirToDirOfSameName()
     {
         $sourceRoot = 'root';
@@ -32,7 +34,7 @@ class CopyTest extends AbstractTest
         $this->mkdir($this->sourceDir . DS . $sourceRoot . DS . dirname($sourceContents));
         touch($this->sourceDir . DS . $sourceRoot . DS . $sourceContents);
 
-        // intentionally using a differnt name to verify solution doesn't rely on identical src/dest paths
+        // intentionally using a different name to verify solution doesn't rely on identical src/dest paths
         $dest = "dest/root";
         $this->mkdir($this->destDir . DS . $dest);
 
@@ -51,7 +53,7 @@ class CopyTest extends AbstractTest
     public function testWildcardCopyToExistingDir()
     {
         $sourceContents = "app/code/test.php";
-        
+
         //create target directory before
         $this->mkdir($this->destDir . DS . 'app' . DS . 'code');
 
@@ -71,6 +73,6 @@ class CopyTest extends AbstractTest
         $this->strategy->deploy();
 
         $this->assertFileDoesNotExist($this->destDir . DS . 'app' . DS . 'app' . DS . 'code' . DS . 'test.php');
-        
+
     }
 }

@@ -51,9 +51,12 @@ class PathMappingTranslationTest extends InstallerTest
                 ->disableOriginalConstructor()
                 ->getMock();
         $this->composer->setDownloadManager($this->dm);
+        $this->getMockBuilder('Composer\Repository\InstalledRepositoryInterface')
+            ->getMock();
 
-        $this->repository = $this->getMock('Composer\Repository\InstalledRepositoryInterface');
-        $this->io = $this->getMock('Composer\IO\IOInterface');
+//        $this->repository = $this->getMock('Composer\Repository\InstalledRepositoryInterface');
+        $this->io = $this->getMockBuilder('Composer\IO\IOInterface')
+            ->getMock();
 
         $this->object = new Installer($this->io, $this->composer);
     }

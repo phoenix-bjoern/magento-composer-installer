@@ -56,8 +56,9 @@ class InstallerTest extends \PHPUnit\Framework\TestCase
                ->getMock();
         $this->composer->setDownloadManager($this->dm);
 
-        $this->repository = $this->getMock('Composer\Repository\InstalledRepositoryInterface');
-        $this->io = $this->getMock('Composer\IO\IOInterface');
+        $this->repository = $this->getMockBuilder('Composer\Repository\InstalledRepositoryInterface')
+            ->getMock();
+        $this->io = $this->getMockBuilder('Composer\IO\IOInterface')->getMock();
 
         $this->object = new Installer($this->io, $this->composer);
     }
@@ -74,7 +75,7 @@ class InstallerTest extends \PHPUnit\Framework\TestCase
         //$package= $this->getMockBuilder('Composer\Package\RootPackageInterface')
         $package = $this->getMockBuilder('Composer\Package\RootPackage')
             ->setConstructorArgs([md5(rand()), '1.0.0.0', '1.0.0'])
-            ->onlyMethods(['getExtra', 'getName'])
+            ->onlyMethods(['getExtra', 'getName', 'getType'])
             ->getMock();
 
         $extraData = array_merge(['magento-root-dir' => $this->magentoDir], $extra);
@@ -82,8 +83,7 @@ class InstallerTest extends \PHPUnit\Framework\TestCase
         $package->method('getExtra')
             ->will($this->returnValue($extraData));
         
-        $package->expects($this->any())
-            ->method('getName')
+        $package->method('getName')
             ->will($this->returnValue($name));
 
         return $package;
@@ -120,6 +120,8 @@ class InstallerTest extends \PHPUnit\Framework\TestCase
         
         $package = $this->createPackageMock( $packageExtra, $packageName );
         $prepareCallback($this->vendorDir);
+        $package->method('getType')->will($this->returnValue('magento2-library'));
+
         $this->assertInstanceOf($expectedClass, $this->object->getParser($package));
     }
     
