@@ -752,7 +752,7 @@ class Installer extends LibraryInstaller implements InstallerInterface
                 $map = $moduleSpecificMap[$package->getName()];
             }
         }
-        $suffix = PackageTypes::$packageTypes[$package->getType()];
+        $suffix = $package->getType() ? PackageTypes::$packageTypes[$package->getType()] : '';
         if (isset($map)) {
             $parser = new MapParser($map, $this->_pathMappingTranslations, $suffix);
             return $parser;
@@ -781,7 +781,6 @@ class Installer extends LibraryInstaller implements InstallerInterface
      */
     public function getInstallPath(PackageInterface $package)
     {
-
         if ($this->modmanRootDir !== null && true === $this->modmanRootDir->isDir()) {
             $targetDir = $package->getTargetDir();
             if (!$targetDir) {

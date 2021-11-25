@@ -140,7 +140,8 @@ class Symlink extends DeploystrategyAbstract
             array_shift($dir);
         }
 
-        $relativePath = str_repeat('../', count($dir)) . implode('/', $file);
+        // magento_dir/targetdir/childdir => ../../module_dir/sourcedir/childdir
+        $relativePath = str_repeat('../', count($dir) - 1) . implode('/', $file);
         return $relativePath;
     }
 }
