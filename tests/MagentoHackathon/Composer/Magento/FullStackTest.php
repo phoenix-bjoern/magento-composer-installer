@@ -27,8 +27,8 @@ class FullStackTest extends FullStack\AbstractTest
         /** @var \DirectoryIterator $fileinfo */
         foreach($directory as $file){
             if (!$file->isDot() && $file->isDir()) {
-                $process = new Process(
-                    [self::getComposerCommand().' archive --format=zip --dir="../../../../tests/FullStackTest/artifact" -vvv'],
+                $process = Process::fromShellCommandline(
+                    self::getComposerCommand() . ' archive --format=zip --dir="../../../../tests/FullStackTest/artifact" -vvv',
                     $file->getPathname()
                 );
                 $process->run();
@@ -127,8 +127,7 @@ class FullStackTest extends FullStack\AbstractTest
      */
     public function testEverything( $method )
     {
-
-        $this->assertFileExists( self::getBasePath().'/artifact/magento-hackathon-magento-composer-installer-999.0.0.zip' );
+        $this->assertFileExists( self::getBasePath().'/artifact/magento-magento-composer-installer-dev-master.zip');
 
         $methods = $this->getMethodRunConfigs();
         

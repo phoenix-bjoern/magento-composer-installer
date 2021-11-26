@@ -18,8 +18,8 @@ abstract class AbstractTest extends \PHPUnit\Framework\TestCase
 
     public static function setUpBeforeClass(): void
     {
-        $process = new Process(
-            ['perl -pi -e \'s/"test_version"/"version"/g\' ./composer.json'],
+        $process = Process::fromShellCommandline(
+            'perl -pi -e \'s/"test_version"/"version"/g\' ./composer.json',
             self::getProjectRoot()
         );
         $process->run();
@@ -36,9 +36,9 @@ abstract class AbstractTest extends \PHPUnit\Framework\TestCase
         @unlink(self::getProjectRoot().'/vendor/theseer/directoryscanner/tests/_data/nested/empty');
         @unlink(self::getBasePath().'/magento/vendor/theseer/directoryscanner/tests/_data/nested/empty');
         @unlink(self::getBasePath().'/magento-modules/vendor/theseer/directoryscanner/tests/_data/nested/empty');
-        
-        $process = new Process(
-            [self::getComposerCommand().' archive --format=zip --dir="tests/FullStackTest/artifact" -vvv'],
+
+        $process = Process::fromShellCommandline(
+            self::getComposerCommand().' archive --format=zip --dir="tests/FullStackTest/artifact" -vvv',
             self::getProjectRoot()
         );
         $process->run();
@@ -55,8 +55,8 @@ abstract class AbstractTest extends \PHPUnit\Framework\TestCase
     
     public static function tearDownAfterClass(): void
     {
-        $process = new Process(
-            ['perl -pi -e \'s/"version"/"test_version"/g\' ./composer.json'],
+        $process = Process::fromShellCommandline(
+            'perl -pi -e \'s/"version"/"test_version"/g\' ./composer.json',
             self::getProjectRoot()
         );
         $process->run();
@@ -77,7 +77,7 @@ abstract class AbstractTest extends \PHPUnit\Framework\TestCase
     }
 
     protected static function getComposerCommand(){
-        $command = 'composer.phar';
+        $command = './composer.phar';
         if( getenv('TRAVIS') == "true" ){
             $command = self::getProjectRoot() . '/composer.phar';
         }
