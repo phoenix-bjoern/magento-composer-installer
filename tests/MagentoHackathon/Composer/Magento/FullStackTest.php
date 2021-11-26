@@ -27,8 +27,9 @@ class FullStackTest extends FullStack\AbstractTest
         /** @var \DirectoryIterator $fileinfo */
         foreach($directory as $file){
             if (!$file->isDot() && $file->isDir()) {
+                $composerPath = self::getProjectRoot() . '/composer.phar';
                 $process = Process::fromShellCommandline(
-                    self::getComposerCommand() . ' archive --format=zip --dir="../../../../tests/FullStackTest/artifact" -vvv',
+                    $composerPath . ' archive --format=zip --dir="../../../../tests/FullStackTest/artifact" -vvv',
                     $file->getPathname()
                 );
                 $process->run();
@@ -61,8 +62,8 @@ class FullStackTest extends FullStack\AbstractTest
     
     protected function installBaseMagento()
     {
-        $process = new Process(
-            [self::getComposerCommand().' install '.self::getComposerArgs().' --working-dir="./"'],
+        $process = Process::fromShellCommandline(
+            '../../.././composer.phar install '.self::getComposerArgs().' --working-dir="./"',
             self::getBasePath().'/magento'
         );
         $process->setTimeout(300);
@@ -195,8 +196,9 @@ class FullStackTest extends FullStack\AbstractTest
             $magentoModuleComposerFile
         );
 
-        $process = new Process(
-            [self::getComposerCommand().' '.$command.' '.self::getComposerArgs().' --optimize-autoloader --working-dir="./"'],
+        $composerPath = '../../.././composer.phar';
+        $process = Process::fromShellCommandline(
+            $composerPath .' '.$command.' '.self::getComposerArgs().' --optimize-autoloader',
             self::getBasePath().'/magento-modules'
         );
         $process->setTimeout(300);
@@ -208,10 +210,9 @@ class FullStackTest extends FullStack\AbstractTest
     protected function getFirstOnlyFileTestSet()
     {
         return [
-            'app/etc/modules/Aoe_Profiler.xml',
+            'app/etc/modules/Aoe_TemplateHints.xml',
             'app/design/frontend/test/default/issue76/Foobar/issue76.phtml',
             'app/design/frontend/wildcard/wildcard.phtml',
-            'composer_lib/autoload.php',
             'composer_lib/magento-hackathon/magento-composer-installer-test-library/composer.json',
 //            'app/design/frontend/test/default/updateFileRemove/design/test2.phtml',
         ];
