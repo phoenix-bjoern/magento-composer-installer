@@ -54,7 +54,6 @@ class PathMappingTranslationTest extends InstallerTest
         $this->getMockBuilder('Composer\Repository\InstalledRepositoryInterface')
             ->getMock();
 
-//        $this->repository = $this->getMock('Composer\Repository\InstalledRepositoryInterface');
         $this->io = $this->getMockBuilder('Composer\IO\IOInterface')
             ->getMock();
 
