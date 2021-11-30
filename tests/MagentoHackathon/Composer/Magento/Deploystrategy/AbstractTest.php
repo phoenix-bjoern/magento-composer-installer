@@ -270,24 +270,24 @@ abstract class AbstractTest extends TestCase
         $this->assertFileType($testTarget, $this->getTestDeployStrategyFiletype());
     }
 
-//    public function testGlobSlashDirectoryDoesNotExists()
-//    {
-//        $globSource = "sourcedir/test.xml";
-//        $this->mkdir($this->sourceDir . DS . dirname($globSource));
-//        touch($this->sourceDir . DS . $globSource);
-//
-//        $dest = "targetdir/"; // the target should be created inside this dir because of the slash
-//
-//        $testTarget = $this->destDir . DS . $dest . basename($globSource);
-//
-//        // second create has to identify symlink
-//        $this->strategy->setCurrentMapping([$globSource, $dest]);
-//        $this->strategy->create($globSource, $dest);
-//
-//        $this->assertFileType(dirname($testTarget), self::TEST_FILETYPE_DIR);
-//        $this->assertFileExists($testTarget);
-//        $this->assertFileType($testTarget, $this->getTestDeployStrategyFiletype());
-//    }
+    public function testGlobSlashDirectoryDoesNotExists()
+    {
+        $globSource = "sourcedir/test.xml";
+        $this->mkdir($this->sourceDir . DS . dirname($globSource));
+        touch($this->sourceDir . DS . $globSource);
+
+        $dest = "targetdir/"; // the target should be created inside this dir because of the slash
+
+        $testTarget = $this->destDir . DS . $dest . basename($globSource);
+
+        // second create has to identify symlink
+        $this->strategy->setCurrentMapping([$globSource, $dest]);
+        $this->strategy->create($globSource, $dest);
+
+        $this->assertFileType(dirname($testTarget), self::TEST_FILETYPE_DIR);
+        $this->assertFileExists($testTarget);
+        $this->assertFileType($testTarget, $this->getTestDeployStrategyFiletype());
+    }
 
     public function testGlobWildcardTargetDirDoesNotExist()
     {

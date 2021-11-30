@@ -246,8 +246,7 @@ abstract class DeploystrategyAbstract
         
         $sourcePath = $this->getSourceDir() . DIRECTORY_SEPARATOR
             . ltrim($this->removeTrailingSlash($source), DIRECTORY_SEPARATOR);
-        $destPath = $this->getDestDir() . DIRECTORY_SEPARATOR
-            . ltrim($this->removeTrailingSlash($dest), DIRECTORY_SEPARATOR);
+        $destPath = $this->getDestDir() . DIRECTORY_SEPARATOR . $dest;
 
         /* List of possible cases, keep around for now, might come in handy again
 
