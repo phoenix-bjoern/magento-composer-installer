@@ -35,7 +35,7 @@ class GlobalPluginTest extends AbstractTest
             self::getProjectRoot(),
             ['COMPOSER_HOME' => self::getBasePath() . '/home']
         );
-
+        $process->setTimeout(180);
         $process->run();
         $this->assertProcess($process);
     }
@@ -47,7 +47,7 @@ class GlobalPluginTest extends AbstractTest
             self::getProjectRoot(),
             ['COMPOSER_HOME' => self::getBasePath() . '/home']
         );
-
+        $process->setTimeout(180);
         $process->run();
         $this->assertProcess($process);
     }

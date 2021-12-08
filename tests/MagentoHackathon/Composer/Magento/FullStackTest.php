@@ -108,7 +108,6 @@ class FullStackTest extends FullStack\AbstractTest
                     'module_composer_json' => "composer_1_copy_force.json",
                 ],
             ],
-            
         ];
         
         return $array;
@@ -128,74 +127,72 @@ class FullStackTest extends FullStack\AbstractTest
      */
     public function testEverything( $method )
     {
-        $this->assertFileExists( self::getBasePath().'/artifact/magento-magento-composer-installer-dev-master.zip');
+        $this->assertFileExists(
+            self::getBasePath() .
+            '/artifact/magento-magento-composer-installer-' .
+            self::$testVersion . '.zip'
+        );
+
+        $this->prepareCleanDirectories();
+        $this->installBaseMagento();
 
         $methods = $this->getMethodRunConfigs();
-        
         $runs = $methods[$method];
-            
-            $this->prepareCleanDirectories();
+        foreach( $runs as $run => $value){
+            $this->changeModuleComposerFileAndUpdate(
+                $value['module_composer_json'],
+                ($run === 1) ? 'install' : 'update'
+            );
 
-            $this->installBaseMagento();
-
-            foreach( $runs as $run => $value){
-                $this->changeModuleComposerFileAndUpdate(
-                    $value['module_composer_json'],
-                    ($run===1) ? 'install' : 'update'
-                );
-
-                switch($run){
-                    case 1:
-                    case 3:
-                        foreach( 
-                            $this->getFirstOnlyFileTestSet()
-                            + $this->getFirstExistTestSet()
-                            as $file){
-                            $this->assertFileExists( self::getBasePath().'/htdocs/'.$file );
+            switch($run){
+                case 1:
+                case 3:
+                    foreach($this->getFirstOnlyFileTestSet() + $this->getFirstExistTestSet() as $file){
+                        $this->assertFileExists(self::getBasePath() . '/htdocs/'. $file );
+                    }
+                    foreach($this->getFirstNotExistTestSet() as $file){
+                        $this->assertFileDoesNotExist( self::getBasePath() .'/htdocs/'. $file );
+                    }
+                    if($method==="copy_force"){
+                        $this->assertStringEqualsFile(
+                            self::getBasePath().'/htdocs/' . 'app/design/frontend/Magento/luma/Magento_SortThemeMock/design/test1.phtml',
+                            'testcontent1'
+                        );
+                        $this->assertStringEqualsFile(
+                            self::getBasePath().'/htdocs/' . 'app/design/frontend/Magento/luma/Magento_SortThemeMock/design/test2.phtml',
+                            'testcontent4'
+                        );
+                    }
+                    break;
+                case 2:
+                    if($method==="symlink"){
+                        foreach($this->getFirstOnlyFileTestSet() as $file){
+                            $this->assertFileDoesNotExist( self::getBasePath() .'/htdocs/'. $file );
                         }
-                        foreach($this->getFirstNotExistTestSet() as $file){
-                            $this->assertFileDoesNotExist( self::getBasePath().'/htdocs/'.$file );
-                        }
-                        if($method==="copy_force"){
-                            $this->assertStringEqualsFile(
-                                self::getBasePath().'/htdocs/'.'app/design/frontend/test/default/installSort/design/test1.phtml',
-                                'testcontent2'
-                            );
-                            $this->assertStringEqualsFile(
-                                self::getBasePath().'/htdocs/'.'app/design/frontend/test/default/installSort/design/test2.phtml',
-                                'testcontent3'
-                            );
-                        }
-                        break;
-                    case 2:
-                        if($method==="symlink"){
-                            foreach($this->getFirstOnlyFileTestSet() as $file){
-                                $this->assertFileDoesNotExist( self::getBasePath().'/htdocs/'.$file );
-                            }
-                        }
-                        foreach($this->getSecondExistTestSet() as $file){
-                            $this->assertFileExists( self::getBasePath().'/htdocs/'.$file );
-                        }
-                        break;
-                }
+                    }
+                    foreach($this->getSecondExistTestSet() as $file){
+                        $this->assertFileExists( self::getBasePath() .'/htdocs/'. $file );
+                    }
+                    break;
             }
+        }
     }
 
     protected function changeModuleComposerFileAndUpdate($file, $command = "update")
     {
-        $magentoModuleComposerFile = self::getBasePath().'/magento-modules/composer.json';
+        $magentoModuleComposerFile = self::getBasePath() . '/magento-modules/composer.json';
         if(file_exists($magentoModuleComposerFile)){
             unlink($magentoModuleComposerFile);
         }
         copy(
-            self::getBasePath().'/magento-modules/'.$file,
+            self::getBasePath().'/magento-modules/' . $file,
             $magentoModuleComposerFile
         );
 
         $composerPath = '../../.././composer.phar';
         $process = Process::fromShellCommandline(
-            $composerPath .' '.$command.' '.self::getComposerArgs().' --optimize-autoloader',
-            self::getBasePath().'/magento-modules'
+            $composerPath . ' ' . $command. ' '. self::getComposerArgs().' --optimize-autoloader --working-dir="./"',
+            self::getBasePath() . '/magento-modules'
         );
         $process->setTimeout(300);
         $process->run();
@@ -206,9 +203,9 @@ class FullStackTest extends FullStack\AbstractTest
     protected function getFirstOnlyFileTestSet()
     {
         return [
-            'app/etc/modules/Aoe_TemplateHints.xml',
-            'app/design/frontend/test/default/issue76/Foobar/issue76.phtml',
-            'app/design/frontend/wildcard/wildcard.phtml',
+            'app/code/Magento/ModuleMock/etc/module.xml',
+            'app/design/frontend/Magento/luma/Magento_ThemeMock/Foobar/issue76.phtml',
+            'app/design/adminhtml/Magento/luma/Magento_AdminThemeMock/wildcard/wildcard.phtml',
             'composer_lib/magento-hackathon/magento-composer-installer-test-library/composer.json',
 //            'app/design/frontend/test/default/updateFileRemove/design/test2.phtml',
         ];
@@ -242,8 +239,4 @@ class FullStackTest extends FullStack\AbstractTest
 //            'app/design/frontend/test/default/updateFileRemove/design/test1.phtml',
         ];
     }
-
-
-
-
 }

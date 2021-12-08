@@ -16,20 +16,30 @@ abstract class AbstractTest extends \PHPUnit\Framework\TestCase
 
     protected static $processLogCounter = 1;
 
+    /**
+     * Store current module version for rollback
+     *
+     * @var string
+     */
+    protected static $currentModuleVersion = '';
+
+    /**
+     * Version to be set in root composer.json for tests
+     *
+     * @var string
+     */
+    protected static $testVersion = '101.500.900';
+
     public static function setUpBeforeClass(): void
     {
-        $process = Process::fromShellCommandline(
-            'perl -pi -e \'s/"test_version"/"version"/g\' ./composer.json',
-            self::getProjectRoot()
+        $rootComposer = json_decode(file_get_contents(self::getProjectRoot() . '/composer.json'), true);
+        self::$currentModuleVersion = $rootComposer['version'] ?? '';
+        $rootComposer['version'] = self::$testVersion;
+        file_put_contents(
+            self::getProjectRoot() . '/composer.json',
+            json_encode($rootComposer, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
         );
-        $process->run();
-        if ($process->getExitCode() !== 0) {
-            $message = 'process for <code>'.$process->getCommandLine().'</code> exited with '.$process->getExitCode().': '.$process->getExitCodeText();
-            $message .= PHP_EOL.'Error Message:'.PHP_EOL.$process->getErrorOutput();
-            $message .= PHP_EOL.'Output:'.PHP_EOL.$process->getOutput();
-            echo $message;
-        }
-        
+
         @unlink(self::getProjectRoot().'/vendor/theseer/directoryscanner/tests/_data/linkdir');
         @unlink(self::getBasePath().'/magento/vendor/theseer/directoryscanner/tests/_data/linkdir');
         @unlink(self::getBasePath().'/magento-modules/vendor/theseer/directoryscanner/tests/_data/linkdir');
@@ -55,6 +65,17 @@ abstract class AbstractTest extends \PHPUnit\Framework\TestCase
     
     public static function tearDownAfterClass(): void
     {
+        $rootComposer = json_decode(file_get_contents(self::getProjectRoot() . '/composer.json'), true);
+        if (self::$currentModuleVersion === '') {
+            unset($rootComposer['version']);
+        } else {
+            $rootComposer['version'] = self::$currentModuleVersion;
+        }
+        file_put_contents(
+            self::getProjectRoot() . '/composer.json',
+            json_encode($rootComposer, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+        );
+
         $process = Process::fromShellCommandline(
             'perl -pi -e \'s/"version"/"test_version"/g\' ./composer.json',
             self::getProjectRoot()
@@ -93,8 +114,17 @@ abstract class AbstractTest extends \PHPUnit\Framework\TestCase
             $name = self::$processLogCounter;
             self::$processLogCounter++;
         }
+        $logPath = implode(DIRECTORY_SEPARATOR, [
+            self::getBasePath(),
+            'logs',
+            str_replace('\\', '_', static::class),
+            $name . '_Output.log'
+        ]);
+        if (!is_dir(dirname($logPath))) {
+            @mkdir(dirname($logPath));
+        }
         file_put_contents(
-            self::getBasePath() . '/' . self::class . '_' . $name . 'Output.log',
+            $logPath,
             $process->getCommandLine() . "\n\n" . $process->getOutput()
         );
     }

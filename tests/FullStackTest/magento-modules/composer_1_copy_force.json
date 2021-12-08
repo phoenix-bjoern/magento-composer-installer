@@ -1,10 +1,9 @@
 {
 	"require": {
-		"fbrnc/aoe_templatehints": "*",
-		"magento-hackathon/magento-composer-installer": "*",
+        "magento/magento2-module-mock": "1.*",
+		"magento/magento-composer-installer": "100.100.100",
         "theseer/autoload": "~1.14",
         "zetacomponents/console-tools": "dev-master",
-		"firegento/psr0autoloader": "dev-master",
         "magento-hackathon/magento-composer-installer-test-issue-87": "1.*",
         "magento-hackathon/magento-composer-installer-test-update-file-remove": "1.*",
         "magento-hackathon/magento-composer-installer-test-wildcard": "1.*",
@@ -12,8 +11,7 @@
         "magento-hackathon/magento-composer-installer-test-library": "1.*",
         "magento-hackathon/magento-composer-installer-test-sort1": "1.*",
         "magento-hackathon/magento-composer-installer-test-sort2": "1.*",
-        "magento-hackathon/magento-composer-installer-test-sort3": "1.*",
-		"firegento/magesetup": "*"
+        "magento-hackathon/magento-composer-installer-test-sort3": "1.*"
 	},
 	"require-dev": {
 		"magento-hackathon/composer-command-integrator": "*",
@@ -21,10 +19,6 @@
 	},
 	"repositories": [
 		{
-			"type": "composer",
-			"url": "https://packages.firegento.com"
-		},
-        {
             "type": "artifact",
             "url": "../artifact/"
         }
