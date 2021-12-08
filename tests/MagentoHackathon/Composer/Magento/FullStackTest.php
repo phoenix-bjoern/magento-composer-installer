@@ -206,6 +206,7 @@ class FullStackTest extends FullStack\AbstractTest
             'app/code/Magento/ModuleMock/etc/module.xml',
             'app/design/frontend/Magento/luma/Magento_ThemeMock/Foobar/issue76.phtml',
             'app/design/adminhtml/Magento/luma/Magento_AdminThemeMock/wildcard/wildcard.phtml',
+            'composer_lib/autoload.php',
             'composer_lib/magento-hackathon/magento-composer-installer-test-library/composer.json',
 //            'app/design/frontend/test/default/updateFileRemove/design/test2.phtml',
         ];

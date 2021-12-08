@@ -28,7 +28,7 @@ abstract class AbstractTest extends \PHPUnit\Framework\TestCase
      *
      * @var string
      */
-    protected static $testVersion = '101.500.900';
+    protected static $testVersion = '100.100.100';
 
     public static function setUpBeforeClass(): void
     {
@@ -98,11 +98,8 @@ abstract class AbstractTest extends \PHPUnit\Framework\TestCase
     }
 
     protected static function getComposerCommand(){
-        $command = './composer.phar';
-        if( getenv('TRAVIS') == "true" ){
-            $command = self::getProjectRoot() . '/composer.phar';
-        }
-        return $command;
+
+        return './composer.phar';
     }
 
     protected static function getComposerArgs(){
