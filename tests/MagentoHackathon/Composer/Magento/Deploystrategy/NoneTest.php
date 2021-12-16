@@ -31,7 +31,7 @@ class NoneTest extends \PHPUnit\Framework\TestCase
         $dest = 'test2';
 
         //create the source directory
-        mkdir($this->_getVfsUrl('sourceDir' . DS . $src), 0777, true);
+        mkdir($this->_getVfsUrl('sourceDir' . DS . $src), 0755, true);
 
         $this->assertTrue(is_dir($this->_getVfsUrl('sourceDir' . DS . $src)));
         $this->assertFalse(is_dir($this->_getVfsUrl('destDir' . DS . $dest)));
