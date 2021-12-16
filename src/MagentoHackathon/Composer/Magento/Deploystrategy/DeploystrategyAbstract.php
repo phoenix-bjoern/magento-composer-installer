@@ -287,7 +287,7 @@ abstract class DeploystrategyAbstract
                 foreach ($matches as $match) {
                     $newDest = substr($destPath . '/' . basename($match), strlen($this->getDestDir()));
                     $newDest = ltrim($newDest, ' \\/');
-                    $this->create(substr($match, strlen($this->getSourceDir())), $newDest);
+                    $this->create(substr($match, strlen($this->getSourceDir()) + 1), $newDest);
                 }
                 return true;
             }

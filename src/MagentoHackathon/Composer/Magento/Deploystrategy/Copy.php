@@ -67,12 +67,12 @@ class Copy extends DeploystrategyAbstract
                         continue;
                     }
                     $childSource = $this->removeTrailingSlash($source) . DIRECTORY_SEPARATOR . $item;
-                    $this->create($childSource, substr($destPath, strlen($this->getDestDir())));
+                    $this->create($childSource, substr($destPath, strlen($this->getDestDir()) + 1));
                 }
                 return true;
             } else {
                 $destPath = $this->removeTrailingSlash($destPath) . DIRECTORY_SEPARATOR . basename($source);
-                return $this->create($source, substr($destPath, strlen($this->getDestDir())));
+                return $this->create($source, substr($destPath, strlen($this->getDestDir()) + 1));
             }
         }
 

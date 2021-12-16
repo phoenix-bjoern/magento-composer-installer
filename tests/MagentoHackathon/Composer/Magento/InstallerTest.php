@@ -81,10 +81,10 @@ class InstallerTest extends \PHPUnit\Framework\TestCase
         $extraData = array_merge(['magento-root-dir' => $this->magentoDir], $extra);
 
         $package->method('getExtra')
-            ->will($this->returnValue($extraData));
+            ->willReturn($extraData);
         
         $package->method('getName')
-            ->will($this->returnValue($name));
+            ->willReturn($name);
 
         return $package;
     }
@@ -120,7 +120,7 @@ class InstallerTest extends \PHPUnit\Framework\TestCase
         
         $package = $this->createPackageMock( $packageExtra, $packageName );
         $prepareCallback($this->vendorDir);
-        $package->method('getType')->will($this->returnValue('magento2-library'));
+        $package->method('getType')->willReturn('magento2-library');
 
         $this->assertInstanceOf($expectedClass, $this->object->getParser($package));
     }

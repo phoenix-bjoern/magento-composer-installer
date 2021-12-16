@@ -6,7 +6,7 @@
         }
     ],
     "require": {
-        "magento-hackathon/magento-composer-installer": "*"
+        "magento/magento-composer-installer": "*"
     },
     "extra": {
         "magento-root-dir": "root"

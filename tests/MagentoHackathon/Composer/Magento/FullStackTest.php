@@ -27,7 +27,7 @@ class FullStackTest extends FullStack\AbstractTest
         /** @var \DirectoryIterator $fileinfo */
         foreach($directory as $file){
             if (!$file->isDot() && $file->isDir()) {
-                $composerPath = self::getProjectRoot() . '/composer.phar';
+                $composerPath = self::getProjectRoot() . DIRECTORY_SEPARATOR . self::getComposerCommand();
                 $process = Process::fromShellCommandline(
                     $composerPath . ' archive --format=zip --dir="../../../../tests/FullStackTest/artifact" -vvv',
                     $file->getPathname()
@@ -63,8 +63,9 @@ class FullStackTest extends FullStack\AbstractTest
     protected function installBaseMagento()
     {
         $process = Process::fromShellCommandline(
-            '../../.././composer.phar install '.self::getComposerArgs().' --working-dir="./"',
-            self::getBasePath().'/magento'
+            self::getProjectRoot() . DIRECTORY_SEPARATOR . self::getComposerCommand() . ' install ' .
+            self::getComposerArgs() . ' --working-dir="./"',
+            self::getBasePath() . '/magento'
         );
         $process->setTimeout(300);
         $process->run();
@@ -207,7 +208,7 @@ class FullStackTest extends FullStack\AbstractTest
             'app/design/frontend/Magento/luma/Magento_ThemeMock/Foobar/issue76.phtml',
             'app/design/adminhtml/Magento/luma/Magento_AdminThemeMock/wildcard/wildcard.phtml',
             'composer_lib/autoload.php',
-            'composer_lib/magento-hackathon/magento-composer-installer-test-library/composer.json',
+            'composer_lib/magento/magento-composer-installer-test-library/composer.json',
 //            'app/design/frontend/test/default/updateFileRemove/design/test2.phtml',
         ];
     }

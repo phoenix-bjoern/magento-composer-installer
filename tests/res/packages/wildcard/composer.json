@@ -1,5 +1,5 @@
 {
-    "name":"magento-hackathon/magento-composer-installer-test-wildcard",
+    "name":"magento/magento-composer-installer-test-wildcard",
     "minimum-stability":"stable",
     "type":"magento2-theme",
     "version":"1.0.0",

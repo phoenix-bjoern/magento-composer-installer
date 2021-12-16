@@ -99,7 +99,7 @@ abstract class AbstractTest extends \PHPUnit\Framework\TestCase
 
     protected static function getComposerCommand(){
 
-        return './composer.phar';
+        return 'composer.phar';
     }
 
     protected static function getComposerArgs(){
@@ -118,7 +118,7 @@ abstract class AbstractTest extends \PHPUnit\Framework\TestCase
             $name . '_Output.log'
         ]);
         if (!is_dir(dirname($logPath))) {
-            @mkdir(dirname($logPath));
+            mkdir(dirname($logPath));
         }
         file_put_contents(
             $logPath,
