@@ -215,8 +215,6 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             }
             return;
         }
-
-
         $vendorDir = rtrim($this->composer->getConfig()->get('vendor-dir'), '/');
 
         $filesystem = $this->filesystem;
@@ -255,7 +253,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             if ($this->io->isDebug()) {
                 $this->io->write('Magento deployLibraries executes autoload generator');
             }
-            $process = new Process($executable . " -o {$libraryPath}/autoload.php  " . implode(' ', $autoloadDirectories));
+            $command = $executable . " -o {$libraryPath}/autoload.php  " . implode(' ', $autoloadDirectories);
+            $process = method_exists(Process::class, 'fromShellCommandline') ? Process::fromShellCommandline($command) : new Process($command);
             $process->run();
         } else {
             if ($this->io->isDebug()) {
@@ -264,8 +263,6 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
             }
         }
-
-
     }
 
 
