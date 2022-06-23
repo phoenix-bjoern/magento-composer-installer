@@ -6,7 +6,8 @@
         }
     ],
     "require": {
-        "magento/magento-composer-installer": "*"
+        "magento/magento-composer-installer": "*",
+        "magento/magento2-base-mock": "*"
     },
     "extra": {
         "magento-root-dir": "root"

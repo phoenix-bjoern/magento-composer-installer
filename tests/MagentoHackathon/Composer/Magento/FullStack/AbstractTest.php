@@ -48,7 +48,7 @@ abstract class AbstractTest extends \PHPUnit\Framework\TestCase
         @unlink(self::getBasePath().'/magento-modules/vendor/theseer/directoryscanner/tests/_data/nested/empty');
 
         $process = Process::fromShellCommandline(
-            self::getComposerCommand().' archive --format=zip --dir="tests/FullStackTest/artifact" -vvv',
+            './' . self::getComposerCommand().' archive --format=zip --dir="tests/FullStackTest/artifact" -vvv',
             self::getProjectRoot()
         );
         $process->run();
@@ -118,7 +118,7 @@ abstract class AbstractTest extends \PHPUnit\Framework\TestCase
             $name . '_Output.log'
         ]);
         if (!is_dir(dirname($logPath))) {
-            mkdir(dirname($logPath));
+            mkdir(dirname($logPath), 0777, true);
         }
         file_put_contents(
             $logPath,
@@ -135,4 +135,4 @@ abstract class AbstractTest extends \PHPUnit\Framework\TestCase
         $message .= PHP_EOL.'Output:'.PHP_EOL.$process->getOutput();
         $this->assertEquals(0, $process->getExitCode(), $message);
     }
-} 
+}
