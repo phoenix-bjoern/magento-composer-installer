@@ -61,7 +61,7 @@
     "archive": {
         "exclude": [
             "vendor",
-            "/tests/FullStackTest/"
+            "dev"
         ]
     },
     "extra": {

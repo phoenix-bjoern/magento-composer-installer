@@ -4,4 +4,4 @@
 /composer.phar
 /composer.lock
 /vendor
-/tests/FullStackTest/logs
+/dev/tests/FullStackTest/logs

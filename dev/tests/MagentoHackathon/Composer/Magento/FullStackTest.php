@@ -22,7 +22,7 @@ class FullStackTest extends FullStack\AbstractTest
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
-        $packagesPath    = self::getProjectRoot() .'/tests/res/packages';
+        $packagesPath    = self::getProjectRoot() .'/dev/tests/res/packages';
         $directory = new \DirectoryIterator($packagesPath);
         /** @var \DirectoryIterator $fileinfo */
         foreach($directory as $file){
@@ -190,7 +190,7 @@ class FullStackTest extends FullStack\AbstractTest
             $magentoModuleComposerFile
         );
 
-        $composerPath = '../../.././composer.phar';
+        $composerPath = self::getProjectRoot() . DIRECTORY_SEPARATOR . self::getComposerCommand();
         $process = Process::fromShellCommandline(
             $composerPath . ' ' . $command. ' '. self::getComposerArgs().' --optimize-autoloader --working-dir="./"',
             self::getBasePath() . '/magento-modules'
