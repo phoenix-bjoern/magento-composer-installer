@@ -7,7 +7,6 @@ use Symfony\Component\Process\Process;
 
 class GlobalPluginTest extends AbstractTest
 {
-    
     protected static $processLogCounter = 1;
 
     protected function setUp(): void
@@ -31,7 +30,7 @@ class GlobalPluginTest extends AbstractTest
     public function testGlobalInstall()
     {
         $process = Process::fromShellCommandline(
-            self::getComposerCommand() . ' global install',
+            './' . self::getComposerCommand() . ' global install',
             self::getProjectRoot(),
             ['COMPOSER_HOME' => self::getBasePath() . '/home']
         );
@@ -43,7 +42,7 @@ class GlobalPluginTest extends AbstractTest
     public function testGlobalUpdate()
     {
         $process = Process::fromShellCommandline(
-            self::getComposerCommand() . ' global update',
+            './' . self::getComposerCommand() . ' global update',
             self::getProjectRoot(),
             ['COMPOSER_HOME' => self::getBasePath() . '/home']
         );
