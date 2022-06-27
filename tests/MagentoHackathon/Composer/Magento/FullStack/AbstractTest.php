@@ -48,7 +48,7 @@ abstract class AbstractTest extends \PHPUnit\Framework\TestCase
         @unlink(self::getBasePath().'/magento-modules/vendor/theseer/directoryscanner/tests/_data/nested/empty');
 
         $process = Process::fromShellCommandline(
-            self::getProjectRoot() . DIRECTORY_SEPARATOR  . self::getComposerCommand().' archive --format=zip --dir="dev/tests/FullStackTest/artifact" -vvv',
+            './' . self::getComposerCommand().' archive --format=zip --dir="tests/FullStackTest/artifact" -vvv',
             self::getProjectRoot()
         );
         $process->run();
@@ -94,7 +94,7 @@ abstract class AbstractTest extends \PHPUnit\Framework\TestCase
     }
 
     protected static function getProjectRoot(){
-        return realpath(__DIR__.'/../../../../../..');
+        return realpath(__DIR__.'/../../../../..');
     }
 
     protected static function getComposerCommand(){
@@ -107,7 +107,7 @@ abstract class AbstractTest extends \PHPUnit\Framework\TestCase
     }
 
     protected static function logProcessOutput(Process $process, $name = null){
-        if ($name === null) {
+        if($name === null) {
             $name = self::$processLogCounter;
             self::$processLogCounter++;
         }
