@@ -9,7 +9,7 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false"
-         bootstrap="dev/tests/bootstrap.php">
+         bootstrap="tests/bootstrap.php">
     <coverage>
         <include>
             <directory>./src/</directory>
@@ -18,7 +18,7 @@
     </coverage>
     <testsuites>
         <testsuite name="Magentohackathon Magento Installer Test Suite">
-            <directory>./dev/tests/MagentoHackathon</directory>
+            <directory>./tests/MagentoHackathon</directory>
         </testsuite>
     </testsuites>
     <groups>

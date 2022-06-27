@@ -30,7 +30,7 @@ class GlobalPluginTest extends AbstractTest
     public function testGlobalInstall()
     {
         $process = Process::fromShellCommandline(
-            self::getProjectRoot() . DIRECTORY_SEPARATOR . self::getComposerCommand() . ' global install',
+            './' . self::getComposerCommand() . ' global install',
             self::getProjectRoot(),
             ['COMPOSER_HOME' => self::getBasePath() . '/home']
         );
@@ -42,7 +42,7 @@ class GlobalPluginTest extends AbstractTest
     public function testGlobalUpdate()
     {
         $process = Process::fromShellCommandline(
-            self::getProjectRoot() . DIRECTORY_SEPARATOR . self::getComposerCommand() . ' global update',
+            './' . self::getComposerCommand() . ' global update',
             self::getProjectRoot(),
             ['COMPOSER_HOME' => self::getBasePath() . '/home']
         );
